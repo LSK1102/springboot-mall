@@ -1,6 +1,6 @@
 package com.lsk.springbootmall.service;
 
-import com.lsk.springbootmall.constant.ProductCategory;
+
 import com.lsk.springbootmall.dao.ProductDao;
 import com.lsk.springbootmall.dao.ProductQueryParams;
 import com.lsk.springbootmall.dto.ProductRequest;

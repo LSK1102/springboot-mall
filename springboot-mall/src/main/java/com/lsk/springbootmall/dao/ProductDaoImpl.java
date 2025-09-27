@@ -29,15 +29,8 @@ public class ProductDaoImpl implements ProductDao {
 
         Map<String,Object> map = new HashMap<>();
 
-        if(productQueryParams.getCategory()!=null){
-            sql=sql+" AND category=:category";
-            map.put("category",productQueryParams.getCategory());
-        }
+        sql=addFileringSql(sql,map,productQueryParams);
 
-        if(productQueryParams.getSearch()!=null){
-            sql=sql+" AND product_name LIKE :search";
-            map.put("search","%"+productQueryParams.getSearch()+"%");
-        }
         sql=sql+" ORDER BY "+productQueryParams.getOrderBy()+" "+productQueryParams.getSort();
 
         sql=sql+" LIMIT :limit OFFSET :offset";
@@ -120,6 +113,12 @@ public class ProductDaoImpl implements ProductDao {
         String sql = "select count(*) from product where 1=1";
         Map<String,Object> map = new HashMap<>();
 
+        sql=addFileringSql(sql,map,productQueryParams);
+
+        Integer total = namedParameterJdbcTemplate.queryForObject(sql,map,Integer.class);
+        return total;
+    }
+    private String addFileringSql(String sql,Map<String,Object> map, ProductQueryParams productQueryParams){
         if(productQueryParams.getCategory()!=null){
             sql=sql+" AND category=:category";
             map.put("category",productQueryParams.getCategory());
@@ -129,8 +128,6 @@ public class ProductDaoImpl implements ProductDao {
             sql=sql+" AND product_name LIKE :search";
             map.put("search","%"+productQueryParams.getSearch()+"%");
         }
-
-        Integer total = namedParameterJdbcTemplate.queryForObject(sql,map,Integer.class);
-        return total;
+        return sql;
     }
 }
