@@ -12,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 public class OrderController {
+
     @Autowired
     private OrderService orderService;
 
@@ -30,6 +30,7 @@ public class OrderController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
+
     @GetMapping("/users/{userId}/orders")
     public ResponseEntity<Page<Order>> getOrders(
             @PathVariable Integer userId,
